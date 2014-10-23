@@ -1,7 +1,7 @@
 # Profile to install the horizon web service
 class openstack::profile::horizon {
   class { '::horizon':
-    fqdn            => [ '127.0.0.1', $::openstack::config::controller_address_api, $::fqdn ],
+    fqdn            => [ '127.0.0.1', $::openstack::config::controller_address_api, $::fqdn,  hiera('openstack::controller::horizon_fqdn'), ],
     secret_key      => $::openstack::config::horizon_secret_key,
     cache_server_ip => $::openstack::config::controller_address_management,
 
