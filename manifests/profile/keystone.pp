@@ -8,9 +8,9 @@ class openstack::profile::keystone {
   include ::openstack::common::keystone
 
   class { 'keystone::endpoint':
-    public_address   => $::openstack::config::controller_address_api,
-    admin_address    => $::openstack::config::controller_address_management,
-    internal_address => $::openstack::config::controller_address_management,
+    public_url       => "https://${::openstack::config::keystone_server_fqdn}:5000",
+    internal_url     => "https://${::openstack::config::keystone_server_fqdn}:5000",
+    admin_url        => "https://${::openstack::config::keystone_server_fqdn}:35357",
     region           => $::openstack::config::region,
   }
 
