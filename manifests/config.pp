@@ -22,6 +22,7 @@ class openstack::config (
   $rabbitmq_password = undef,
   $keystone_server_fqdn = undef,
   $keystone_service_name = undef,
+  $keystone_auth_protocol = undef,
   $keystone_admin_token = undef,
   $keystone_admin_email = undef,
   $keystone_admin_password = undef,
