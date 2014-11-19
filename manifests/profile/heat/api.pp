@@ -30,7 +30,8 @@ class openstack::profile::heat::api {
     rabbit_password   => $::openstack::config::rabbitmq_password,
     debug             => $::openstack::config::debug,
     verbose           => $::openstack::config::verbose,
-    keystone_host     => $::openstack::config::controller_address_management,
+    keystone_host     => $::openstack::config::keystone_server_fqdn,
+    keystone_protocol => $::openstack::config::keystone_auth_protocol,
     keystone_password => $::openstack::config::heat_password,
     mysql_module      => '2.2',
   }
