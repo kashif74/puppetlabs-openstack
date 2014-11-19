@@ -2,7 +2,7 @@ class openstack::common::keystone {
   if $::openstack::profile::base::is_controller {
     $admin_bind_host = '0.0.0.0'
   } else {
-    $admin_bind_host = $::openstack::config::controller_address_management
+    $admin_bind_host = $::openstack::config::keystone_server_fqdn
   }
 
   class { '::keystone':
