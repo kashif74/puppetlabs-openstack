@@ -28,7 +28,8 @@ class openstack::common::nova ($is_compute    = false) {
 
   class { '::nova::api':
     admin_password                       => $::openstack::config::nova_password,
-    auth_host                            => $controller_management_address,
+    auth_host                            => $::openstack::config::keystone_server_fqdn,
+    auth_protocol                        => $::openstack::config::keystone_auth_protocol,
     enabled                              => $is_controller,
     neutron_metadata_proxy_shared_secret => $::openstack::config::neutron_shared_secret,
   }
@@ -61,7 +62,7 @@ class openstack::common::nova ($is_compute    = false) {
   class { '::nova::network::neutron':
     neutron_admin_password => $::openstack::config::neutron_password,
     neutron_region_name    => $::openstack::config::region,
-    neutron_admin_auth_url => "http://${controller_management_address}:35357/v2.0",
+    neutron_admin_auth_url => "${::openstack::config::keystone_auth_protocol}://${::openstack::config::keystone_server_fqdn}:35357/v2.0",
     neutron_url            => "http://${controller_management_address}:9696",
     vif_plugging_is_fatal  => false,
     vif_plugging_timeout   => '0',
