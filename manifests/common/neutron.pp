@@ -36,7 +36,8 @@ class openstack::common::neutron {
   }
 
   class { '::neutron::server':
-    auth_host           => $::openstack::config::controller_address_management,
+    auth_host           => $::openstack::config::keystone_server_fqdn,
+    auth_protocol       => $::openstack::config::keystone_auth_protocol,
     auth_password       => $::openstack::config::neutron_password,
     database_connection => $::openstack::resources::connectors::neutron,
     enabled             => $::openstack::profile::base::is_controller,
@@ -46,7 +47,7 @@ class openstack::common::neutron {
 
   class { '::neutron::server::notifications':
     nova_url            => "http://${controller_management_address}:8774/v2/",
-    nova_admin_auth_url => "http://${controller_management_address}:35357/v2.0/",
+    nova_admin_auth_url => "${::openstack::config::keystone_auth_protocol}://${::openstack::config::keystone_server_fqdn}:35357/v2.0/",
     nova_admin_password => $::openstack::config::nova_password,
     nova_region_name    => $::openstack::config::region,
   }
