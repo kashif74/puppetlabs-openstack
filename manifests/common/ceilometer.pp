@@ -20,7 +20,8 @@ class openstack::common::ceilometer {
 
   class { '::ceilometer::api':
     enabled           => $is_controller,
-    keystone_host     => $controller_management_address,
+    keystone_host     => $::openstack::config::keystone_server_fqdn,
+    keystone_protocol => $::openstack::config::keystone_auth_protocol,
     keystone_password => $::openstack::config::ceilometer_password,
   }
 
@@ -30,7 +31,7 @@ class openstack::common::ceilometer {
   }
 
   class { '::ceilometer::agent::auth':
-    auth_url      => "http://${controller_management_address}:5000/v2.0",
+    auth_url      => "${::openstack::config::keystone_auth_protocol}://${::openstack::config::keystone_server_fqdn}:5000/v2.0",
     auth_password => $::openstack::config::ceilometer_password,
     auth_region   => $::openstack::config::region,
   }
